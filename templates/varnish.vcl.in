@@ -67,8 +67,8 @@ sub vcl_fetch {
         return(pass);
     }
     if (req.http.X-Anonymous && !beresp.http.Cache-Control) {
-        set beresp.ttl = 600s;
-        set beresp.http.X-Varnish-Action = "FETCH (override - backend not setting cache control)";
+        set beresp.http.X-Varnish-Action = "FETCH (pass - backend not setting cache control)";
+        return(pass);
     }
     call rewrite_s_maxage;
     return(deliver);
